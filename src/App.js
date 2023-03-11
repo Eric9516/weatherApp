@@ -1,10 +1,13 @@
 import "./App.css";
+import WheatherProvider from "./context/weatherContext";
 import { Home } from "./pages/Home";
 
 function App() {
 	return (
 		<>
-			<Home />
+			<WheatherProvider>
+				<Home />
+			</WheatherProvider>
 		</>
 	);
 }

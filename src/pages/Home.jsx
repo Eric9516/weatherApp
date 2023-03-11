@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { Container } from "@mui/material";
+import React, { useEffect, useState, useContext } from "react";
 import { Card } from "../components/Card";
+import { WeatherContext } from "../context/weatherContext";
 
 export const Home = () => {
 	const [search, setSearch] = useState("");
 	const [values, setValues] = useState("");
 	const [icon, setIcons] = useState("");
 
+	const context = useContext(WeatherContext);
 	const URL = `http://api.openweathermap.org/data/2.5/weather?q=${search}&lang=es&units=metric&appid=3eaea1096fcf29eaf3c1e7217f06cdcc`;
 
 	const getData = async () => {
@@ -15,7 +18,6 @@ export const Home = () => {
 				if (res.cod >= 400) {
 					return setValues(false);
 				} else {
-					console.log(res);
 					setIcons(res.weather[0].main);
 					setValues(res);
 				}
@@ -28,14 +30,12 @@ export const Home = () => {
 	}, [search]);
 
 	const handleSearch = (e) => {
-		if (e.key === "Enter") {
-			setSearch(e.target.value);
-		}
+		setSearch(context.city);
 	};
 
 	return (
-		<>
+		<Container maxWidth="xs">
 			<Card handleSearch={handleSearch} values={values} icon={icon} />
-		</>
+		</Container>
 	);
 };
